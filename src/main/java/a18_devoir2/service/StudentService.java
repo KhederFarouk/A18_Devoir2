@@ -5,6 +5,7 @@ import a18_devoir2.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
@@ -16,7 +17,10 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
+    @Transactional
     public Student createStudent(Student student) {
-        return studentRepository.save(student);
+        studentRepository.save(student);
+        studentRepository.flush();
+        return student;
     }
 }
